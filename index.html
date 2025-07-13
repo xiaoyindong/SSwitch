@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>致前端-前端工程师学习平台,前端设计师聚集地</title>
+    <meta name="keywords" content="前端,前端开发,前端工程师,web开发,H5开发,页面开发,致前端" />
+    <meta name="description" itemprop="description" content="致前端在于收集整理最前沿的前端知识，分享近期流程技术，包括前端基础知识，常见面试题，大前端技术种类，模块化，组件化，可视化，前端安全，浏览器兼容，浏览器原理等一切前端工程师必知必会的内容。" />
+    <meta name="application-name" content="致前端-前端工程师交流平台" />
+    <meta name="msapplication-tooltip" content="致前端-前端工程师交流平台" />
+    <meta name="msapplication-task" content="name=首页;action-uri=/;icon-uri=/upload/favicon.ico" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="applicable-device" content="pc">
+    <meta name="mobile-agent"content="format=html5;url=/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link crossorigin="" rel="shortcut icon" type="image/x-icon" href="/upload/favicon.ico" media="screen">
+    <!-- <link rel="stylesheet" href="/public/codemirror.css" />
+    <link rel="stylesheet" href="/public/solarized.css"> -->
+    <script defer src="/codemirror.js"></script>
+    <script defer src="/closebrackets.js"></script>
+    <script defer src="/javascript.js"></script>
+    <script defer src="/xml.js"></script>
+    <script defer src="/css.js"></script>
+    <script defer src="/htmlmixed.js"></script>
+</head>
+<body>
+    <div id="App"></div>
+    <script src="/react.production.min.js"></script>
+    <script src="/react-dom.production.min.js"></script>
+    <script>
+        !(function(){function Point(){this.pvUrl="//api.zhiqianduan.com/api/logs/pv";this.list=[]}Point.prototype.initError=function(){window.addEventListener("error",function(event){var error=event.error;this.error(error,{lineno:event.lineno,colno:event.colno})})};Point.prototype.initPerformance=function(){this.send(this.performanceUrl,performance.timing)};Point.prototype.send=function(url,params){params=params||{};var arr=[];for(var i in params){arr.push(i+"="+params[i])}var img=document.createElement("img");img.src=url+"?"+arr.join("&")};Point.prototype.error=function(error,params){params.message=error.message;params.stack=error.stack;this.send(this.errorUrl,params)};Point.prototype.event=function(key,value){this.send(this.eventUrl,{key:key,value:value})};Point.prototype.pv=function(){var href=window.location.href;if(this.list.includes(href)){return}this.list.push(href);this.send(this.pvUrl)};window.DataPoint=new Point()})();
+    </script>
+    <script>
+        ['/codemirror.css'].forEach((href, idx) => {
+            const link = document.createElement('link');
+            link.href = href;
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            document.body.appendChild(link);
+        });
+    </script>
+</body>
+</html>
