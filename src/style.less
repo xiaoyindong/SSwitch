@@ -1,80 +1,149 @@
-html, body {
+html,
+body {
     padding: 0;
     margin: 0;
+    width: 790px;
+    height: 590px;
+    overflow: hidden;
+    // background-color: #f3f5f9;
+    background-color: #ffff;
 }
+
 .s_switch {
-    width: 1080px;
-    height: 680px;
-    border: 1px solid red;
-    display: flex;
-    .nav {
-        color: #333;
-        width: 200px;
-        font-size: 13px;
-        max-height: 680px;
-        overflow-y: scroll;
-        position: relative;
-        padding-bottom: 30px;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-    .nav_item {
+
+    .error {
+        font-size: 12px;
+        color: red;
+    }
+
+    .switch {
         height: 30px;
-        width: 185px;
-        box-sizing: border-box;
-        overflow: hidden;
-        line-height: 30px;
-        padding: 0 2px 0 10px;
-        border-bottom: 1px solid #f3f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 10px;
+        font-size: 13px;
+
+        &>input {
+            height: 14px;
+            width: 14px;
+            display: block;
+        }
+
         user-select: none;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        cursor: pointer;
-        &:hover {
+    }
+
+    .web_container {
+        width: 780px;
+        height: 560px;
+        display: flex;
+
+        .nav {
+            color: #333;
+            width: 200px;
+            font-size: 13px;
+            max-height: 560px;
+            overflow-y: scroll;
+            position: relative;
+            padding-bottom: 30px;
+        }
+
+        .nav_item {
+            height: 30px;
+            width: 185px;
+            box-sizing: border-box;
+            line-height: 30px;
+            padding: 0 2px 0 2px;
+            border-bottom: 1px solid #f3f5f9;
+            user-select: none;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #f3f5f9;
+            }
+
+            font-size: 12px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            .checkbox {
+                display: block;
+                width: 14px;
+                height: 14px;
+            }
+
+            .label {
+                width: 120px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                padding-left: 5px;
+            }
+            .modify {
+                color: #36f;
+                margin: 0 4px;
+            }
+            .delete {
+                color: #36f;
+            }
+
+            .input {
+                padding: 0;
+                margin: 0;
+                height: 20px;
+                border: 1px solid #ccc;
+                width: 120px;
+                outline: none;
+                font-size: 12px;
+
+                &:focus {
+                    border-color: #36f;
+                }
+            }
+
+            // .label {
+            //    height: 30px;
+            // }
+        }
+
+        .nav_active {
             background-color: #f3f5f9;
         }
-        .input {
-            padding: 0;
-            margin: 0;
-            height: 24px;
-            border: 1px solid #ccc;
-            width: 170px;
-            outline: none;
-            &:focus {
-                border-color: #36f;
-            }
+
+        .nav_item_new {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            text-align: center;
+            background-color: #f3f5f9;
+            font-size: 20px;
+            font-weight: bold;
+            width: 185px;
+            justify-content: center;
         }
-        .label {
-           height: 30px;
-        }
-    }
-    .nav_active {
-        background-color: #f3f5f9;
-    }
-    .nav_item_new {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        text-align: center;
-        background-color: #f3f5f9;
-        font-size: 20px;
-        font-weight: bold;
-        width: 185px;
-        justify-content: center;
-    }
-    .container {
-        flex: 1;
-        border: 1px solid #f3f5f9;
-        .textarea {
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            border: 0;
-            height: 678px;
-            resize: none;
-            outline: none;
-            &:focus {
-                border-color: #36f;
+
+        .container {
+            flex: 1;
+            border: 1px solid #f3f5f9;
+            width: 578px;
+            height: 560px;
+            overflow-y: scroll;
+            :global {
+                .CodeMirror {
+                    height: 558px;
+                }
             }
+
+            // .content {
+            //     height: 600px;
+            // }
         }
     }
 }

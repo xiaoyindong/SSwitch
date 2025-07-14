@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "XSwitch3",
+    "version": "1.0",
+    "description": "A tool for redirecting URLs and allowing CORS to make the local development experience easy and happy.",
+    "permissions": [
+        "storage",
+        "scripting",
+        "declarativeNetRequest"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": "grey_128.png"
+    },
+    "icons": {
+        "48": "grey_128.png",
+        "128": "grey_128.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
+}

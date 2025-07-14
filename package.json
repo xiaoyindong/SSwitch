@@ -1,8 +1,8 @@
 {
-  "name": "sswitch",
+  "name": "xswitch3",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@git.zhlh6.cn:xiaoyindong/zhiqianduan.git",
+  "repository": "git@git.zhlh6.cn:xiaoyindong/xswitch.git",
   "author": "yindong <812748570@qq.com>",
   "license": "MIT",
   "scripts": {
@@ -26,6 +26,7 @@
     "axios": "^0.26.1",
     "babel-preset-env": "^1.7.0",
     "dayjs": "^1.11.4",
+    "json5": "^2.2.3",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "react": "^17.0.2",
