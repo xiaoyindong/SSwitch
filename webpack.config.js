@@ -4,7 +4,10 @@ const WebpackBar = require('webpackbar');
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: {
+    index: './src/home/index.tsx',
+    options: './src/options/index.tsx'
+  },
   module: {
     rules: [{
       test: /\.tsx?$/,
@@ -57,13 +60,21 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve('./index.html'),
+      filename: 'index.html',
+      chunks: ['index'],
+      inject: 'body'
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve('./index.html'),
+      filename: 'options.html',
+      chunks: ['options'],
       inject: 'body'
     }),
     new WebpackBar()
   ],
   output: {
-    filename: 'bundle_[chunkhash:8].js',
-    // filename: 'bundle.js',
+    // filename: 'bundle_[chunkhash:8].js',
+    filename: '[name]_[chunkhash:8].js',
     path: path.resolve(__dirname, 'dist'),
     asyncChunks: true,
     clean: true,

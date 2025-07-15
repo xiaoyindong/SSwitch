@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import JSON5 from 'json5';
 import ReactDOM from 'react-dom';
-import styles from './style.less';
+import styles1 from './style.less';
 
 declare const window: Window & { chrome: any; CodeMirror: any };
 
@@ -29,7 +29,7 @@ const polyfill = (rules) => {
     return rules;
 }
 
-const Pages = () => {
+const Pages = ({ isOptions, styles = styles1 }: any) => {
 
     const cachesRef = useRef({
         rules: [],
@@ -65,6 +65,7 @@ const Pages = () => {
     const initCodeMirror = ({ setMessage, save }) => {
         htmlRef.current.innerHTML = '';
         const value = cachesRef.current.rules?.[cachesRef.current.index]?.content;
+        setMessage('');
         window.CodeMirror(htmlRef.current, {
             value: value || '',
             lineWrapping: false,
@@ -135,9 +136,8 @@ const Pages = () => {
         }
     }, [])
 
-    return <div className={styles.s_switch}>
+    return <div className={classNames(styles.s_switch, { [styles.s_options]: isOptions })}>
         <div className={styles.header}>
-            <span className={styles.error}>{message}</span>
             <label className={styles.switch} key={reload}><input
                 type="checkbox"
                 defaultChecked={cachesRef.current.isOpen}
@@ -146,70 +146,85 @@ const Pages = () => {
                     save(cachesRef.current);
                 }}
             />开启</label>
+            {
+                isOptions ? null : <span
+                    className={styles.fullscreen}
+                    onClick={() => {
+                        window.chrome.runtime.openOptionsPage();
+                    }}
+                >全屏</span>
+            }
+            <span className={styles.error}>{message}</span>
+
         </div>
         <div className={styles.web_container}>
-            <nav className={styles.nav} key={reload}>
-                {
-                    cachesRef.current.rules?.map((item, idx) => <div
-                        key={idx}
-                        className={classNames(styles.nav_item, { [styles.nav_active]: idx === cachesRef.current.index })}
-                        title={item.name}
-                    >
-                        <input
-                            defaultChecked={item.checked}
-                            className={styles.checkbox}
-                            type="checkbox"
-                            onChange={(event) => {
-                                item.checked = event.target.checked;
-                                save(cachesRef.current);
-                            }}
-                        />
-                        {
-                            item.edit ? <input
-                                className={styles.input}
+            <nav className={styles.nav}>
+                <div className={styles.nav_list}>
+                    {
+                        cachesRef.current.rules?.map((item, idx) => <div
+                            key={idx + reload}
+                            className={classNames(styles.nav_item, { [styles.nav_active]: idx === cachesRef.current.index })}
+                            title={item.name}
+                        >
+                            <input
+                                defaultChecked={item.checked}
+                                className={styles.checkbox}
+                                type="checkbox"
                                 onChange={(event) => {
-                                    item.name = event.target?.value?.trim?.();
+                                    item.checked = event.target.checked;
+                                    save(cachesRef.current);
                                 }}
-                                defaultValue={item.name}
-                            /> : <div className={styles.label}
+                            />
+                            {
+                                item.edit ? <input
+                                    className={styles.input}
+                                    onChange={(event) => {
+                                        item.name = event.target?.value?.trim?.();
+                                    }}
+                                    defaultValue={item.name}
+                                /> : <div className={styles.label}
+                                    onClick={() => {
+                                        // item.checked = !item.checked;
+                                        cachesRef.current.index = idx;
+                                        setReload(Date.now());
+                                        initCodeMirror({ setMessage, save });
+                                    }}
+                                >{item.name}</div>
+                            }
+                            <div
+                                className={styles.modify}
+                                onClick={(event) => {
+                                    item.edit = !item.edit;
+                                    setReload(Date.now());
+                                    event.preventDefault();
+                                    save(cachesRef.current);
+                                }}
+                            >{item.edit ? '妥' : '改'}</div>
+                            <div
+                                className={styles.delete}
                                 onClick={() => {
-                                    item.checked = !item.checked;
-                                    cachesRef.current.index = idx;
-                                    setReload(Date.now());
-                                    initCodeMirror({ setMessage, save });
+                                    if (confirm('确认删除?')) {
+                                        cachesRef.current.rules.splice(idx, 1);
+                                        cachesRef.current.index = 0;
+                                        htmlRef.current.innerHTML = '';
+                                        setReload(Date.now());
+                                        save(cachesRef.current);
+                                        // initCodeMirror({ setMessage, save });
+                                    }
                                 }}
-                            >{item.name}</div>
-                        }
-                        <div
-                            className={styles.modify}
-                            onClick={(event) => {
-                                item.edit = !item.edit;
-                                setReload(Date.now());
-                                event.preventDefault();
-                            }}
-                        >{item.edit ? '妥' : '改'}</div>
-                        <div
-                            className={styles.delete}
-                            onClick={() => {
-                                if (confirm('确认删除?')) {
-                                    cachesRef.current.rules.splice(idx, 1);
-                                    cachesRef.current.index = 0;
-                                    setReload(Date.now());
-                                    initCodeMirror({ setMessage, save });
-                                }
-                            }}
-                        >删</div>
-                    </div>)
-                }
+                            >删</div>
+                        </div>)
+                    }
+                </div>
                 <div
                     className={classNames(styles.nav_item, styles.nav_item_new)}
                     onClick={() => {
-                        cachesRef.current.rules.push({
+                        cachesRef.current.rules.unshift({
                             name: '新规则',
                             value: rule,
-                            content: JSON5.stringify(rule, null, 2)
+                            content: JSON5.stringify(rule, null, 2),
                         })
-                        cachesRef.current.index = cachesRef.current.rules.length - 1;
+                        cachesRef.current.index = 0;
                         setReload(Date.now());
                         initCodeMirror({ setMessage, save });
                         save(cachesRef.current);
@@ -222,5 +237,7 @@ const Pages = () => {
         </div>
     </div>
 }
+
+export default Pages;
 
 ReactDOM.render(<Pages />, document.getElementById('App'));
