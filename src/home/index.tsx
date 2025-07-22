@@ -154,6 +154,53 @@ const Pages = ({ isOptions, styles = styles1 }: any) => {
                     }}
                 >全屏</span>
             }
+            <span
+                className={styles.fullscreen}
+                onClick={() => {
+                    // 创建 JSON 文件
+                    const jsonContent = JSON.stringify(cachesRef.current, null, 2);
+                    const blob = new Blob([jsonContent], { type: 'application/json' });
+                    // 创建下载链接
+                    const url = URL.createObjectURL(blob);
+                    // 触发下载
+                    window.chrome.downloads.download({
+                        url: url,
+                        filename: `xwitch_export_${new Date().toISOString().replace(/:/g, '-')}.json`,
+                        saveAs: true
+                    });
+                }}
+            >导出</span>
+            {
+                isOptions ? <span
+                    className={styles.fullscreen}
+                    onClick={() => {
+                        window.showOpenFilePicker({
+                            types: [
+                                {
+                                    description: 'JSON Files',
+                                    accept: {
+                                        'application/json': ['.json']
+                                    }
+                                }
+                            ],
+                            multiple: false
+                        }).then(async ([fileHandle]) => {
+                            try {
+                                // 获取文件
+                                const file = await fileHandle.getFile();
+                                // 读取文件内容
+                                const fileContent = await file.text();
+                                cachesRef.current = JSON.parse(fileContent);
+                                htmlRef.current.innerHTML = '';
+                                setReload(Date.now());
+                                save(cachesRef.current);
+                            } catch (error) {
+
+                            }
+                        })
+                    }}
+                >导入</span> : null
+            }
             <span className={styles.error}>{message}</span>
 
         </div>
