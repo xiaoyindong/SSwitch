@@ -16,6 +16,15 @@ function getNextRuleId() {
 
 // 更新规则的函数
 function updateRules(rules, isOpen) {
+    chrome.action.setIcon({
+        path: isOpen ? {
+            "48": "blue_128.png",
+            "128": "blue_128.png"
+        } : {
+            "48": "grey_128.png",
+            "128": "grey_128.png"
+        }
+    });
     console.log('总开关状态：', isOpen)
     chrome.declarativeNetRequest.getDynamicRules(existingRules => {
         const newRules = [];
